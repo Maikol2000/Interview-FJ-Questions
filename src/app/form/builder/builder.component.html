@@ -1,0 +1,49 @@
+<div class="flex justify-center pt-2">
+  <div *ngIf="!isAddNewQuestions; else showAddNewQuestions">
+    <form [formGroup]="rf">
+      <div formArrayName="forms">
+        <div *ngFor="let _ of questions().controls; let i = index">
+          <div [formGroupName]="i">
+            <input formControlName="title" class="font-bold mb-2 mt-4" />
+            <div *ngIf="!getMultipleAnswer(i)">
+              <textarea
+                formControlName="answersTextBox"
+                class="border border-black"
+              ></textarea>
+            </div>
+            <div formArrayName="answers">
+              <div
+                *ngFor="
+                  let _ of formsAnswers(i).controls;
+                  let answerIndex = index
+                "
+              >
+                <div [formGroupName]="answerIndex">
+                  <div class="flex gap-3">
+                    <input type="checkbox" formControlName="chose" />
+                    <input formControlName="answer" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <button class="mt-2 underline" (click)="toggleForm()">
+      Add New Question
+    </button>
+    <div class="flex justify-end mt-2">
+      <button class="border-2 h-12 w-28" (click)="reviewQuestion()">
+        Review my answers >
+      </button>
+    </div>
+  </div>
+  <ng-template #showAddNewQuestions>
+    <app-add-new-questions
+      (newQuestion)="addNewQuestions($event)"
+      (toggleForm)="toggleForm()"
+    ></app-add-new-questions>
+  </ng-template>
+</div>

@@ -1,0 +1,22 @@
+<div class="flex justify-center pt-2">
+  <div *ngFor="let question of questions$ | async">
+    <div>
+      <p class="font-bold">{{ question.title }}</p>
+      <div *ngIf="!question.multipleAnswer">
+        <p>
+          {{ question.answersTextBox }}
+        </p>
+      </div>
+      <div class="space-y-3 ml-3">
+        <div *ngFor="let answer of question.answers">
+          <div *ngIf="answer.chose">
+            {{ answer.answer }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="text-center">
+  <a routerLink="/form/builder" class="underline">Back to Forms Builder</a>
+</div>
